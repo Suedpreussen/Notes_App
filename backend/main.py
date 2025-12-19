@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -10,10 +11,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+class Message(BaseModel):
+    text: str
+    
 @app.get("/")
 def read_root():
     return {"message": "Hello FastAPI!"}
 
-@app.get("/users/{user_id}")
-def get_user(user_id: int):
-    return {"user_id": user_id}
+@app.post("/echo")
+async def echo_message(msg: Message) -> dict:
+    return {
+        "received": msg.text,
+        "length": len(msg.text),
+    }
