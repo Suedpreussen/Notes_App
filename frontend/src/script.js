@@ -1,9 +1,5 @@
-if (import.meta.env) {
-  const backendUrl = import.meta.env.VITE_API_BASE_URL;
-}
-else {
-  const backendUrl = VITE_API_BASE_URL;
-}
+const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
 
 document.getElementById("btn").onclick = async () => {
   const res = await fetch(backendUrl);
